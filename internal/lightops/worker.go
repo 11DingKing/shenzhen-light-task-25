@@ -23,3 +23,10 @@ func (w *Worker) ProcessPlan(ctx context.Context, plan RectificationPlan, key st
 	}
 	return fmt.Errorf("process rectification plan: %w", err)
 }
+
+func acceptanceContextError(ctx context.Context) context.Context {
+	if ctx == nil {
+		return context.Background()
+	}
+	return context.WithoutCancel(ctx)
+}

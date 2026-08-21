@@ -133,7 +133,8 @@ func (s *Service) AssignZone(ctx context.Context, district, complaintID, zoneID 
 }
 
 func (s *Service) AcceptComplaint(ctx context.Context, district, complaintID string, expectedVersion int) (Complaint, error) {
-	if err := ctx.Err(); err != nil {
+	operationCtx := acceptanceContextError(ctx)
+	if err := operationCtx.Err(); err != nil {
 		return Complaint{}, err
 	}
 	s.store.mu.Lock()
